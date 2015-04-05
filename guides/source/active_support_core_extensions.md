@@ -475,7 +475,7 @@ The methods `silence_warnings` and `enable_warnings` change the value of `$VERBO
 silence_warnings { Object.const_set "RAILS_DEFAULT_LOGGER", logger }
 ```
 
-Silencing exceptions is also possible with `suppress`. This method receives an arbitrary number of exception classes. If an exception is raised during the execution of the block and is `kind_of?` any of the arguments, `suppress` captures it and returns silently. Otherwise the exception is reraised:
+Silencing exceptions is also possible with `suppress`. This method receives an arbitrary number of exception classes. If an exception is raised during the execution of the block and is `kind_of?` any of the arguments, `suppress` captures it and returns silently. Otherwise the exception is not captured:
 
 ```ruby
 # If the user is locked, the increment is lost, no big deal.
@@ -505,6 +505,8 @@ Extensions to `Module`
 ----------------------
 
 ### `alias_method_chain`
+
+**This method is deprecated in favour of using Module#prepend.**
 
 Using plain Ruby you can wrap methods with other methods, that's called _alias chaining_.
 
@@ -549,8 +551,6 @@ ActionController::TestCase.class_eval do
   alias_method_chain :process, :stringified_params
 end
 ```
-
-Rails uses `alias_method_chain` all over the code base. For example validations are added to `ActiveRecord::Base#save` by wrapping the method that way in a separate module specialized in validations.
 
 NOTE: Defined in `active_support/core_ext/module/aliasing.rb`.
 

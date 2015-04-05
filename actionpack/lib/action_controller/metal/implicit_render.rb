@@ -4,7 +4,7 @@ module ActionController
       ret = super
       return ret if performed?
 
-      if template_exists?(method, _prefixes, variants: request.variant || [])
+      if template_exists?(method, _prefixes, variants: request.variant)
         default_render
       else
         logger.info "No template found for #{self.class.name}#{action_name}, rendering head :no_content"
